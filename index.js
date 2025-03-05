@@ -6,11 +6,16 @@ const Anthropic = require('@anthropic-ai/sdk');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// 🔥 Configuración de CORS mejorada para permitir conexión desde Framer
+const corsOptions = {
+  origin: "*",  // Permite acceso desde cualquier origen (ajústalo si necesitas más seguridad)
+  methods: "POST, GET, OPTIONS",
+  allowedHeaders: ["Content-Type"]
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
-// Verificar que la API Key esté cargada
+// ✅ Verificar que la API Key de Anthropic esté definida
 if (!process.env.ANTHROPIC_API_KEY) {
   console.error("❌ Error: No se ha definido la API Key de Anthropic.");
   process.exit(1);
@@ -18,12 +23,12 @@ if (!process.env.ANTHROPIC_API_KEY) {
   console.log("✅ API Key de Anthropic detectada.");
 }
 
-// Configurar Anthropic
+// 🔥 Configurar conexión con Anthropic
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// Ruta principal para generar frases
+// 📌 Ruta principal para generar frases con Claude 3.5 Sonnet
 app.post('/generate-phrases', async (req, res) => {
   try {
     const { userInput } = req.body;
@@ -32,7 +37,7 @@ app.post('/generate-phrases', async (req, res) => {
       return res.status(400).json({ error: '❌ Se requiere texto de entrada' });
     }
 
-    // Hacer la solicitud a Claude 3 Sonnet
+    // Hacer la solicitud a Claude 3.5 Sonnet
     const completion = await anthropic.messages.create({
       model: "claude-3-5-sonnet-20241022",
       max_tokens: 1024,
@@ -70,12 +75,12 @@ Formatea la respuesta utilizando los siguientes encabezados:
   }
 });
 
-// Ruta básica para verificar que el servidor está funcionando
+// 📌 Ruta básica para verificar que el servidor está funcionando
 app.get('/', (req, res) => {
-  res.send('🚀 Servidor de generación de frases PNL activo con Claude 3 Sonnet.');
+  res.send('🚀 Servidor de generación de frases PNL activo con Claude 3.5 Sonnet.');
 });
 
-// Iniciar el servidor
+// 🚀 Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`✅ Servidor ejecutándose en el puerto ${PORT}`);
 });
