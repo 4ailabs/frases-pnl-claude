@@ -34,7 +34,7 @@ app.post('/generate-phrases', async (req, res) => {
 
     // Hacer la solicitud a Claude 3 Sonnet
     const completion = await anthropic.messages.create({
-      model: "claude-3-sonnet-20240229",
+      model: "claude-3-sonnet-20240307",
       max_tokens: 1024,
       system: `Actúa como un generador avanzado de frases persuasivas basadas en técnicas de PNL.
 Cuando el usuario indique un objetivo o intención, genera 4 tipos de frases persuasivas siguiendo estas instrucciones precisas:
