@@ -6,9 +6,9 @@ const Anthropic = require('@anthropic-ai/sdk');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔥 Configuración de CORS mejorada para permitir conexión desde Framer
+// 
 const corsOptions = {
-  origin: "*", // Permite acceso desde cualquier origen
+  origin: true, // 🔥 Permite solicitudes desde cualquier origen, incluido Framer
   methods: "POST, GET, OPTIONS",
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
