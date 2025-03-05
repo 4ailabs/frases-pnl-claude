@@ -1,0 +1,15 @@
+{
+  "name": "frases-pnl-claude",
+  "version": "1.0.0",
+  "description": "Generador de frases persuasivas con Claude 3 Sonnet",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "@anthropic-ai/sdk": "^0.7.3"
+  }
+}
