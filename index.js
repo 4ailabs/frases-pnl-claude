@@ -8,9 +8,10 @@ const PORT = process.env.PORT || 3000;
 
 // 🔥 Configuración de CORS mejorada para permitir conexión desde Framer
 const corsOptions = {
-  origin: "*",  // Permite acceso desde cualquier origen (ajústalo si necesitas más seguridad)
+  origin: "*", // Permite acceso desde cualquier origen
   methods: "POST, GET, OPTIONS",
-  allowedHeaders: ["Content-Type"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -36,6 +37,8 @@ app.post('/generate-phrases', async (req, res) => {
     if (!userInput) {
       return res.status(400).json({ error: '❌ Se requiere texto de entrada' });
     }
+
+    console.log("📨 Solicitud recibida con entrada:", userInput);
 
     // Hacer la solicitud a Claude 3.5 Sonnet
     const completion = await anthropic.messages.create({
@@ -64,6 +67,8 @@ Formatea la respuesta utilizando los siguientes encabezados:
         }
       ],
     });
+
+    console.log("📨 Respuesta recibida de Claude:", completion.content);
 
     res.json({ result: completion.content });
   } catch (error) {
